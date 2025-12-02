@@ -46,8 +46,6 @@ Msource_BM/
     └── soil_classification_results.txt
 ```
 
-Note: Compiled artifacts (e.g., `.exe`, `.mod`) are not tracked; build locally.
-
 ## Installation
 
 ### Prerequisites
@@ -148,7 +146,7 @@ Bosszz — Created on 2025-12-02
 
 ## Citation
 
-If you use BMmod in research, please cite:
+If you use Msource_BM in research, please cite:
 
 ```
 Bosszz (2025). BMmod: Markov Chain Spatial Modeling Software.
