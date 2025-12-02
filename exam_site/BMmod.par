@@ -1,0 +1,27 @@
+4                                          /# of categories
+0.3194E+00  0.3639E+00  0.2722E+00  0.4444E-01             /proportions
+2                                          /background category
+.\data.dbg                                 /name of debugging file
+.\data.bgr                                 /output file for 3-D model
+.\datadet.bgr                              /output file for determinant 
+0.05 0.05 0.05                           /determinant extent for 3-D model
+3 1 0.5                             /dx,dy,dz for 3-D model
+.\datamcx.eas                             /X-direction output file
+500 3                                /X-Direction: # lags, spacing    
+5                                   /1=r,2=d,3=etp,4=etf,5=i,6=p,7=f
+300 1 1 1
+1 300 1 1
+1 1 300 1
+1 1 1 300
+.\datamcy.eas                           /Y-direction output file
+10 0.1                                /Y-Direction: # lags, spacing    
+5                                      /1=r,2=d,3=etp,4=etf,5=i,6=p,7=f
+2 1 1 1
+1 2 1 1
+1 1 2 1
+1 1 1 2
+.\datamcz.eas                         /Z-direction output file
+120 0.5                                 /Z-Direction: # lags, spacing    
+2                                       /1=r,2=d,3=etp,4=etf,5=i,6=p,7=f
+.\exam_site.eas
+5                                       /lag#
