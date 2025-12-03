@@ -19,7 +19,7 @@ module bmmod_types
   integer, parameter :: ip = int32
   
   ! Define array size constants
-  integer, parameter :: mcat_max = 4
+  integer, parameter :: mcat_max = 10
   integer, parameter :: mlag_max = 2700000
   integer, parameter :: mdat_max = mcat_max * mcat_max * mlag_max
   
@@ -793,7 +793,7 @@ contains
        
        diff = .false.
        do j = 1, ncat
-          if (abs(fmarg(j) - x(j)) > 1e-5) diff = .true.
+          if (abs(fmarg(j) - x(j)) > 1e-5) diff = .true. ! Added epsilon
        end do
        
        if (diff) then
@@ -971,7 +971,7 @@ contains
     ! Nested loops for lags
     do ihz = -nhz, nhz
        do ihy = -nhy, nhy
-          ! debug print disabled
+          print *, 'ihz=', ihz ! Restored verbosity
           do ihx = -nhx, nhx
              ia = ia + 1
              call r2txyz(ihx, ihy, ihz, t, s)
@@ -1198,6 +1198,7 @@ program BMmod
   
   print *, 'Name of debugging file:'
   read(7, "(a)") dbgfil
+  call clean_filename(dbgfil)
   
   ! Write debugging info
   open(ldbg, file=dbgfil, status='unknown')
@@ -1211,8 +1212,10 @@ program BMmod
   ! Get 3-D model parameters
   print *, 'Name of 3-D transition probability model file:'
   read(7, "(a)") filtxyz
+  call clean_filename(filtxyz)
   print *, 'Name of determinant file:'
   read(7, "(a)") fildet
+  call clean_filename(fildet)
   
   print *, 'Determinant limits for 3-D model; x,y,z direction:'
   read(7, *) detdir(1:3)
@@ -1230,6 +1233,7 @@ program BMmod
      
      print "('Name of output file for ', a1, ' direction:')", dir(id)
      read(7, "(a)") filnam
+     call clean_filename(filnam)
      open(id, file=filnam, status='unknown')
      
      print "(' # of lags, lag spacing ', a1, ' direction:')", dir(id)
@@ -1290,7 +1294,7 @@ program BMmod
         else if (iopt == 4) then
            call emctf(r0, r)
         else if (iopt == 5) then
-           call indep(r0, rconc, entropy)
+           call indep(r0, rconc, entropy) ! entropy dummy here? No, entropy is real var
         else if (iopt == 6) then
            call vprop(r0, rconc)
         else if (iopt == 7) then
@@ -1486,5 +1490,16 @@ program BMmod
   print *, 'BMmod has ended'
   close(ldbg)
   close(7)
+
+contains
+
+  subroutine clean_filename(fname)
+    character(len=*), intent(inout) :: fname
+    integer(ip) :: idx
+    
+    idx = index(fname, '/')
+    if (idx > 0) fname = fname(:idx-1)
+    fname = adjustl(fname)
+  end subroutine clean_filename
 
 end program BMmod
